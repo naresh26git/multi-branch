@@ -1,25 +1,9 @@
-pipeline {
-    agent any
-
-    stages {
-
-            steps {
-                    sh 'mvn clean compile'
-                }
-            }
-        }
-
-        stage ('Testing Stage') {
-
-            steps {
-                    sh 'mvn test'
-                }
-            }
-
-        stage ('Deployment Stage') {
-            steps {
-                    sh 'mvn deploy'
-                }
-        }
-        
-        
+node{
+    stage('Compile-Package') {
+        sh 'mvn clean compile'
+    }
+    stage( 'build image') {
+        sh 'docker build -t naresh/javamulti .'
+        sh 'docker images'
+    }
+}
