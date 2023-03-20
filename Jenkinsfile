@@ -7,8 +7,5 @@ pipeline {
               	    echo "repo cloned successfully"  
               	    }  
          	    } 
-            stage("compile package") {
-                sh 'mvn clean package'
-            }
         }
 }
