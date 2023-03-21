@@ -1,3 +1,7 @@
-FROM tomcat:8
-# Take the war and copy to webapps of tomcat
-COPY target/newbook.war /usr/local/tomcat/webapps/
+FROM tomcat:8.0-alpine
+
+LABEL maintainer=”deepak@softwareyoga.com”
+
+ADD newbook.war /usr/local/tomcat/webapps/
+
+EXPOSE 8080
