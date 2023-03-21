@@ -17,7 +17,7 @@ pipeline {
         stage('Docker Build') {
             steps {
                 script {
-                    docker.build("naresh/hello-world:${TAG}")
+                    sh 'docker build -t naresh/newbook:v1 .'
                 }
             }
         }
