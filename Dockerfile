@@ -2,7 +2,7 @@ FROM tomcat:8.0-alpine
 
 LABEL maintainer=”naresh”
 
-ADD onlinebookstore.war /usr/local/tomcat/webapps/
+COPY target/onlinebookstore.war /usr/local/tomcat/webapps/
 
 EXPOSE 8080
 
