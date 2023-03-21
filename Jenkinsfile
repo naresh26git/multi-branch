@@ -1,17 +1,20 @@
 pipeline {
-    agent {
-        docker {
-            image 'node:lts-alpine'
-            args '-p 3000:3000 -p 5000:5000'
-        }
-    }
+    agent any
     environment {
-        CI = 'true'
+        DATE = new Date().format('yy.M')
+        TAG = "${DATE}.${BUILD_NUMBER}"
     }
     stages {
-        stage('Build') {
+        stage ('Build') {
             steps {
                 sh 'npm install'
+            }
+        }
+        stage('Docker Build') {
+            steps {
+                script {
+                    docker.build("naresh/hello-node:${TAG}")
+                }
             }
         }
     }
