@@ -13,7 +13,7 @@ pipeline {
         stage('Docker Build') {
             steps {
                 script {
-                    docker.build("naresh/hello-node:${TAG}")
+                    sh 'docker build -t naresh/node:v2 .'
                 }
             }
         }
