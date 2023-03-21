@@ -1,3 +1,9 @@
-FROM tomcat:8
-# Take the war and copy to webapps of tomcat
-COPY target/onlinebookstore.war /usr/local/tomcat/webapps/
+FROM tomcat:8.0-alpine
+
+LABEL maintainer=”naresh”
+
+ADD onlinebookstore.war /usr/local/tomcat/webapps/
+
+EXPOSE 8080
+
+CMD [“catalina.sh”, “run”]
