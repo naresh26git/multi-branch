@@ -14,6 +14,7 @@ pipeline {
             steps {
                 script {
                     sh 'docker build -t naresh/newbook:v1 .'
+                    sh 'docker images'
                 }
             }
         }
