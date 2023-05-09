@@ -6,7 +6,7 @@ pipeline {
      environment {
 
       sonar_url = 'http://180.151.249.202:9000/'
-      sonar.login= '098aae5895384d95848afee8440c2bf7f7e7f83b'
+      sonar_login= '098aae5895384d95848afee8440c2bf7f7e7f83b'
       //sonar_username = 'admin'
       //sonar_password = 'admin'
       //nexus_url = 'IP:8081'
