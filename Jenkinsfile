@@ -13,7 +13,7 @@ pipeline {
         stage('Docker Build') {
             steps {
                 script {
-                    sh 'docker build -t naresh/newbook:v1 .'
+                    sh 'docker build -t comdevops/multi:v1 .'
                     sh 'docker images'
                 }
             }
