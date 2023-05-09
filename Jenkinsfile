@@ -10,7 +10,7 @@ pipeline {
                 sh 'mv target/onlinebookstore*.war target/newbook.war'
             }
         }
-        stage ('sonar-qube') {
+        stage ('SonarQube') {
             steps {
                 script { 
                     def mvnHome =  tool name: 'maven3', type: 'maven'
@@ -25,6 +25,17 @@ pipeline {
                 script {
                     sh 'docker build -t comdevops/multi:v1 .'
                     sh 'docker images'
+                }
+            }
+        }
+        stage('Docker Push') {
+            steps {
+                script {
+                    withCredentials([string(credentialsId: 'dockerPass', variable: 'dockerPassword')]) {
+                        sh "docker login -u comdevops -p ${dockerPassword}"
+                        sh 'docker push comdevops/multi:v1'
+                        sh 'docker rmi comdevops/multi:v1'
+                    }
                 }
             }
         }
