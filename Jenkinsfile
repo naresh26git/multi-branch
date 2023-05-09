@@ -10,6 +10,14 @@ pipeline {
                 sh 'mv target/onlinebookstore*.war target/newbook.war'
             }
         }
+        stage ('sonar-qube') {
+            steps {
+                def mvnHome =  tool name: 'maven3', type: 'maven'
+                withSonarQubeEnv('sonar-pro') {
+                    sh "${mvnHome}/bin/mvn sonar:sonar"
+                }
+            }
+        }
         stage('Docker Build') {
             steps {
                 script {
@@ -18,5 +26,6 @@ pipeline {
                 }
             }
         }
+        
     }
 }
