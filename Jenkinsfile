@@ -39,10 +39,10 @@ pipeline {
                 }
             }
         }
-        stage('Docker deployment'){
+        stage('dockerdeployment') {
             steps {
-                script{
-                    sh 'docker run -d -p 8082:8080 --name tomcattest comdevops/multi:v1'
+                script {
+                    sh 'docker run -d -p 8090:8080 --name tomcattest comdevops/multi:v1'
                 }
             }
         }
