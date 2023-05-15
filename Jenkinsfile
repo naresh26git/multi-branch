@@ -1,8 +1,8 @@
 node{
    stage('Build'){
     def mvnHome =  tool name: 'maven3', type: 'maven'
-    sh 'mvn clean install'
-    //sh 'mv target/onlinebookstore*.war target/newbook.war'     
+    sh 'mvn clean package'
+    sh 'mv target/onlinebookstore*.war target/newbook.war'     
    }
    stage('SonarQube Analysis') {
 	   def mvnHome =  tool name: 'maven3', type: 'maven'
