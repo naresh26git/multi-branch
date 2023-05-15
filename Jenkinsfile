@@ -6,9 +6,11 @@ pipeline {
     stages {
         stage ('Build') {
             steps {
+                script{
                 def mvnHome =  tool name: 'maven3', type: 'maven'
                 sh 'mvn clean package'
                 sh 'mv target/onlinebookstore*.war target/newbook.war'
+                }
             }
         }
         stage ('SonarQube') {
