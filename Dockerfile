@@ -1,2 +1,3 @@
 FROM tomcat:9
-COPY output/*.onlinebookstore.war /usr/local/tomcat/webapps/
+# Take the war and copy to webapps of tomcat
+COPY target/newbook.war /usr/local/tomcat/webapps/
