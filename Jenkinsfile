@@ -39,10 +39,12 @@ pipeline {
                 }
             }
         }
-        stage('dockerdeployment') {
+        stage('deploy on k8s') {
             steps {
                 script {
-                    sh 'docker run -d -p 8090:8080 --name tomcattest comdevops/multi:v1'
+                    sh 'minikube status'
+                    sh 'minikube delete'
+                    sh 'minikube start'
                 }
             }
         }
