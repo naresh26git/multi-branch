@@ -1,59 +1,44 @@
-pipeline {
-    agent any
-    tools {
-        maven 'maven3' 
-    }
-    stages {
-        stage ('Build') {
-            steps {
-                sh 'mvn clean package'
-                sh 'mv target/onlinebookstore*.war target/newbook.war'
-            }
-        }
-        stage ('SonarQube') {
-            steps {
-                script { 
-                    def mvnHome =  tool name: 'maven3', type: 'maven'
-                    withSonarQubeEnv('sonar-pro') {
-                        sh "${mvnHome}/bin/mvn sonar:sonar"
-                    }
-                }
-            }
-        }
-        stage('Docker Build') {
-            steps {
-                script {
-                    sh 'docker build -t comdevops/multi:v1 .'
-                    sh 'docker images'
-                }
-            }
-        }
-        stage('Docker Push') {
-            steps {
-                script {
-                    withCredentials([string(credentialsId: 'dockerPass', variable: 'dockerPassword')]) {
-                        sh "docker login -u comdevops -p ${dockerPassword}"
-                        sh 'docker push comdevops/multi:v1'
-                        sh 'docker rmi comdevops/multi:v1'
-                    }
-                }
-            }
-        }
-        stage ('Deploy on k8s') {
-            steps {
-                script {
-                    sh 'minikube delete'
-                    sh 'minikube start'
-                    sh 'kubectl create ns ms'
-                    sh 'kubectl config set-context --current --namespace=ms'
-                    sh 'kubectl create secret generic javapipe --from-file=.dockerconfigjson=/opt/docker/config.json -n ms --type kubernetes.io/dockerconfigjson --dry-run=client -oyaml > secret.yaml'
-                    sh 'kubectl apply -f secret.yaml'
-                    sh 'kubectl apply -f java.yaml'
-                    sh 'kubectl get pod -o wide'
-                    sh 'kubectl get'
-                    sh 'kubectl get node -o wide'
-                }
-            }
-        }
-    }
-}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: "java-app"
+  namespace: ms
+  labels:
+    app: "java-app"
+spec:
+  selector:
+    matchLabels:
+      app: "java-app"
+  replicas: 1
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app: "java-app"
+    spec:
+      containers:
+      - name: "java-app"
+        image:  comdevops/multi:v1
+        ports:
+        - containerPort:  8080
+          name: "java-app"
+      imagePullSecrets:
+      - name: javapipe
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: "java-app"
+  namespace: ms
+spec:
+  selector:
+    app: "java-app"
+  type: NodePort
+  ports:
+  - name: "java-app"
+    port: 8080
+    targetPort: 8080
