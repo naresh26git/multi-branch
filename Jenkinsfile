@@ -7,6 +7,7 @@ pipeline {
         stage ('Build') {
             steps {
                 sh 'mvn clean package'
+                sh 'mv target/onlinebookstore*.war target/newbook.war'
             }
         }
         stage ('SonarQube') {
@@ -33,7 +34,6 @@ pipeline {
                     withCredentials([string(credentialsId: 'dockerPass', variable: 'dockerPassword')]) {
                         sh "docker login -u comdevops -p ${dockerPassword}"
                         sh 'docker push comdevops/multi:v1'
-                        sh 'docker rmi comdevops/multi:v1'
                     }
                 }
             }
