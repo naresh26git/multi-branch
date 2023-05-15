@@ -52,7 +52,7 @@ pipeline {
                     sh 'kubectl apply -f kube.yaml'
                     sh 'kubectl get pods -o wide'
                     sh 'kubectl get svc'
-                    sh 'kubectl deployment'
+                    sh 'kubectl get deployment'
                     sh 'kubectl get node -o wide'
                 }
             }
