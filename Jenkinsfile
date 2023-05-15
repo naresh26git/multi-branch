@@ -42,7 +42,7 @@ pipeline {
         stage('deploy on k8s') {
             steps {
                 script {
-                    sh 'minikube status'
+                    sh 'minikube stop'
                     sh 'minikube delete'
                     sh 'minikube start'
                 }
