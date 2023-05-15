@@ -48,6 +48,8 @@ pipeline {
                     //sh 'kubectl config set-context --current --namespace=ms'
                     //sh 'kubectl create secret generic javapipe --from-file=.dockerconfigjson=/opt/docker/config.json -n ms --type kubernetes.io/dockerconfigjson --dry-run=client -oyaml > secret.yaml'
                     //sh 'kubectl apply -f secret.yaml'
+                    sh 'kubectl delete deployment java-app'
+                    sh 'kubectl delete service java-app'
                     sh 'kubectl apply -f kube.yaml'
                     sh 'kubectl get pods -o wide'
                     sh 'kubectl get svc'
