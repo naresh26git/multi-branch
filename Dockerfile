@@ -1,6 +1,3 @@
-FROM tomcat:8.0.20-jre8
+FROM tomcat:8
 # Take the war and copy to webapps of tomcat
-COPY . .
-EXPOSE 8080
-#RUN mvn
-CMD ["catalina.sh", "run"]
+COPY target/newbook.war /usr/local/tomcat/webapps/
