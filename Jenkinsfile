@@ -23,7 +23,7 @@ node{
    stage('deploy on k8s') {
 	   //sh 'minikube delete'
            //sh 'minikube stop'
-           sh 'minikube start'
+           //sh 'minikube start'
            sh 'kubectl create ns ms'
            sh 'kubectl config set-context --current --namespace=ms'
            sh 'kubectl create secret generic javapipe --from-file=.dockerconfigjson=/opt/docker/config.json -n ms --type kubernetes.io/dockerconfigjson --dry-run=client -oyaml > secret.yaml'
