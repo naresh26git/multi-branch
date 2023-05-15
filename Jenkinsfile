@@ -21,8 +21,8 @@ node{
 	   }
    }
    stage('deploy on k8s') {
-	   sh 'minikube delete'
-           sh 'minikube stop'
+	   //sh 'minikube delete'
+           //sh 'minikube stop'
            sh 'minikube start'
            sh 'kubectl create ns ms'
            sh 'kubectl config set-context --current --namespace=ms'
