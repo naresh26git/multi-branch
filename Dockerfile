@@ -1,2 +1,2 @@
-FROM tomcat9
-COPY output/*.onlinebookstore.war /usr/local/tomcat9/webapps/
+FROM tomcat:9
+COPY output/*.onlinebookstore.war /usr/local/tomcat/webapps/
