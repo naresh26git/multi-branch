@@ -22,7 +22,7 @@ spec:
     spec:
       containers:
       - name: "java-app"
-        image:  comdevops/multi:v2
+        image:  naresh2603/java:v1
         ports:
         - containerPort:  8080
           name: "java-app"
