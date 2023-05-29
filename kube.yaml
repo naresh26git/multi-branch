@@ -2,7 +2,6 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: "java-app"
-  #namespace: ms
   labels:
     app: "java-app"
 spec:
@@ -26,8 +25,6 @@ spec:
         ports:
         - containerPort:  8080
           name: "java-app"
-      imagePullSecrets:
-      - name: javapipe
 ---
 apiVersion: v1
 kind: Service
