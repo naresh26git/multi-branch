@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: "java-app"
-  namespace: ms
+  #namespace: ms
   labels:
     app: "java-app"
 spec:
@@ -20,24 +20,24 @@ spec:
       labels:
         app: "java-app"
     spec:
-      serviceAccountName: my-service-account
+      #serviceAccountName: my-service-account
       containers:
       - name: "java-app"
         image:  naresh2603/java:v1
         ports:
-        - containerPort:  80
+        - containerPort:  8080
           name: "java-app"
 ---
 apiVersion: v1
 kind: Service
 metadata:
   name: "java-app"
-  namespace: ms
+  #namespace: ms
 spec:
   selector:
     app: "java-app"
-  type: LoadBalancer
+  type: NodePort
   ports:
   - name: "java-app"
-    port: 80
-    targetPort: 80
+    port: 8080
+    targetPort: 8080
