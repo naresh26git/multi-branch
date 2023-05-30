@@ -19,6 +19,7 @@ spec:
       labels:
         app: "java-app"
     spec:
+      serviceAccountName: my-service-account
       containers:
       - name: "java-app"
         image:  naresh2603/java:v1
