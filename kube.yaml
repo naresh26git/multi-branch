@@ -36,7 +36,7 @@ metadata:
 spec:
   selector:
     app: "java-app"
-  type: NodePort
+  type: LoadBalancer
   ports:
   - name: "java-app"
     port: 80
