@@ -23,7 +23,7 @@ spec:
       #serviceAccountName: my-service-account
       containers:
       - name: "java-app"
-        image:  naresh2603/java:v1
+        image:  comdevops/java:v1
         ports:
         - containerPort:  8080
           name: "java-app"
