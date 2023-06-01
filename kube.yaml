@@ -20,10 +20,9 @@ spec:
       labels:
         app: "java-app"
     spec:
-      #serviceAccountName: my-service-account
       containers:
       - name: "java-app"
-        image:  comdevops/java:v1
+        image:  comdevops/multi:v2
         ports:
         - containerPort:  8080
           name: "java-app"
