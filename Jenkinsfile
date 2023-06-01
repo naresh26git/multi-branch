@@ -26,7 +26,7 @@ pipeline {
         stage('Docker Build') {
             steps {
                 script {
-                    sh 'docker build -t comdevops/java:v1 .'
+                    sh 'docker build -t comdevops/multi:v2 .'
                     //sh 'docker images'
                 }
             }
