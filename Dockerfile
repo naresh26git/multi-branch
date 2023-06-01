@@ -8,7 +8,7 @@ WORKDIR /usr/local/tomcat/webapps
 RUN rm -rf ROOT
 
 # Copy the war file of your web application to the Tomcat webapps directory
-COPY onlinebookstore.war ROOT.war
+COPY target/onlinebookstore.war ROOT.war
 
 # Expose the default Tomcat port
 EXPOSE 8080
