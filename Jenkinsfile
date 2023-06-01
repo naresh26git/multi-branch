@@ -8,7 +8,7 @@ pipeline {
             steps {
                 script{
                 def mvnHome =  tool name: 'maven3', type: 'maven'
-                sh "${mvnHome}/bin/mvn clean package"
+                sh "${mvnHome}/bin/mvn clean install"
                 sh 'mv target/onlinebookstore*.war target/newbook.war'
                 }
             }
