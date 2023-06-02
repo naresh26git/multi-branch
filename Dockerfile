@@ -3,5 +3,5 @@ RUN echo " Try to build my application"
 COPY . /var/www
 WORKDIR /var/www
 RUN npm install
-EXPOSE 31695
+EXPOSE 3000
 ENTRYPOINT ["npm","start"]
