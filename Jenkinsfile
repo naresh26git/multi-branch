@@ -11,14 +11,14 @@ node{
 	        }
 	    }
    stage('Build Docker Imager'){
-   sh 'docker build -t comdevops/multi:v1 .'
+   sh 'docker build -t comdevops/multi:v2 .'
    }
    stage('Docker Image Push'){
    withCredentials([string(credentialsId: 'dockerPass', variable: 'dockerPassword')]) {
    sh "docker login -u comdevops -p ${dockerPassword}"
     }
-   sh 'docker push comdevops/javav1:v1'
-   sh 'docker rmi -f comdevops/javav1:v1'
+   sh 'docker push comdevops/multi:v2'
+   sh 'docker rmi -f comdevops/multi:v2'
    }
    stage('minikube start'){
     withKubeCredentials(kubectlCredentials: [[ credentialsId: 'kube', namespace: 'ms' ]]) {
