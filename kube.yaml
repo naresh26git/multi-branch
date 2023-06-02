@@ -23,11 +23,10 @@ spec:
       containers:
       - name: "node-app"
         image:  comdevops/multi:v1
+        imagePullPolicy: Always
         ports:
-        - containerPort:  8081
+        - containerPort:  3000
           name: "node-app"
-      imagePullSecrets:
-      - name: javapipe
 ---
 apiVersion: v1
 kind: Service
@@ -40,5 +39,5 @@ spec:
   type: NodePort
   ports:
   - name: "node-app"
-    port: 8081
-    targetPort: 8081
+    port: 3000
+    targetPort: 3000
