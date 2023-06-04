@@ -27,6 +27,7 @@ pipeline {
         steps{
           script{
             sh 'docker build -t comdevops/multi:v2 .'
+            sh 'docker images'
           }
         }
       }
