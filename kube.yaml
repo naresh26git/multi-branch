@@ -5,8 +5,6 @@ metadata:
  namespace: ms
 spec:
  type: NodePort
- #clusterIP: 10.106.155.225
-# externalTrafficPolicy: Cluster
  selector:
    app: my-app
    env: prod
@@ -36,7 +34,7 @@ spec:
    spec: 
     containers: 
     - name: my-deployment-container 
-      image: comdevops/java:v2
+      image: comdevops/multi:v2
       imagePullPolicy: Always
       ports:
         - name: app-port
