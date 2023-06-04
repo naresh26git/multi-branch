@@ -1,7 +1,25 @@
+apiVersion: v1
+kind: Service
+metadata:
+ name: nodeport-svc
+ namespace: ms
+spec:
+ type: NodePort
+ #clusterIP: 10.106.155.225
+# externalTrafficPolicy: Cluster
+ selector:
+   app: my-app
+   env: prod
+ ports:
+   - port: 80
+     protocol: TCP
+     targetPort: app-port
+     nodePort: 32001
+---
 apiVersion: apps/v1 
 kind: Deployment
 metadata: 
- name: java-app
+ name: my-deployment
  namespace: ms
 spec: 
  replicas: 1 
@@ -18,24 +36,8 @@ spec:
    spec: 
     containers: 
     - name: my-deployment-container 
-      image: comdevops/multi:v2
+      image: comdevops/java:v2
       imagePullPolicy: Always
       ports:
         - name: app-port
           containerPort: 8080
-          
----
-apiVersion: v1
-kind: Service
-metadata:
- name: java-app
- namespace: ms
-spec:
- type: NodePort
- selector:
-   app: my-app
-   env: prod
- ports:
-   - port: 80
-     protocol: TCP
-     targetPort: app-port
