@@ -1,54 +1,56 @@
 pipeline {
     agent any
-    tools {
-        maven 'maven3' 
-    }
     stages {
-        stage ('Build') {
-            steps {
-                script{
-                def mvnHome =  tool name: 'maven3', type: 'maven'
-                sh "${mvnHome}/bin/mvn clean package"
-                sh 'mv target/onlinebookstore*.war target/newbook.war'
-                }
-            }
+      stage('SCM Checkout'){
+        steps{
+          git credentialsId: 'git', url: 'https://github.com/st-naresh/Java-pj.git'
         }
-        stage ('SonarQube') {
-            steps {
-                script { 
-                    def mvnHome =  tool name: 'maven3', type: 'maven'
-                    withSonarQubeEnv('sonar-pro') {
-                        sh "${mvnHome}/bin/mvn sonar:sonar"
-                    }
-                }
-            }
+      }
+      stage ('Build') {
+        steps {
+          script{
+            def mvnHome = tool name: 'maven3', type: 'maven'
+            sh "mvn package"
+            //sh 'mv target/onlinebookstore*.war target/newbook.war'
+          }
         }
-        stage('Docker Build') {
-            steps {
-                script {
-                    sh 'docker build -t comdevops/multi:v2 .'
-                    //sh 'docker images'
-                }
+      }
+      stage ('SonarQube'){
+        steps{
+          script{
+            def mvnHome =  tool name: 'maven3', type: 'maven'
+            withSonarQubeEnv('sonar-pro') {
+              sh "${mvnHome}/bin/mvn sonar:sonar"
             }
+          }
         }
-        stage('Docker Push') {
-            steps {
-                script {
-                    withCredentials([string(credentialsId: 'dockerPass', variable: 'dockerPassword')]) {
-                        sh "docker login -u comdevops -p ${dockerPassword}"
-                        sh 'docker push comdevops/multi:v2'
-                    }
-                }
+      }
+      stage('Docker Build') {
+        steps{
+          script{
+            sh 'docker build -t comdevops/java:v2 .'
+          }
+        }
+      }
+      stage('Docker push'){
+        steps{
+          script{
+            withCredentials([string(credentialsId: 'dockerPass', variable: 'dockerPassword')]) {
+              sh "docker login -u comdevops -p ${dockerPassword}"
+              sh 'docker push comdevops/java:v2'
+              sh 'docker rmi comdevops/java:v2'
             }
+          }
         }
-        stage('Deploy on k8s') {
-            steps {
-                script {
-                  withKubeCredentials(kubectlCredentials: [[ credentialsId: 'kubernetes', namespace: 'ms' ]]) {
-                    sh 'kubectl apply -f kube.yaml'
-                  }
-                }
+      }
+      stage('Deploy on k8s') {    
+        steps {
+          script{
+            withKubeCredentials(kubectlCredentials: [[ credentialsId: 'kubernetes', namespace: 'ms' ]]) {
+                sh 'kubectl apply -f kube.yaml'
             }
+          }
         }
+      }
     }
 }
