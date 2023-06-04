@@ -22,7 +22,7 @@ spec:
       imagePullPolicy: Always
       ports:
         - name: app-port
-          containerPort: 8082
+          containerPort: 8080
           
 ---
 apiVersion: v1
@@ -39,4 +39,3 @@ spec:
    - port: 80
      protocol: TCP
      targetPort: app-port
-     nodePort: 32001
