@@ -26,7 +26,7 @@ pipeline {
       stage('Docker Build') {
         steps{
           script{
-            sh 'docker build -t comdevops/java:v2 .'
+            sh 'docker build -t comdevops/multi:v2 .'
           }
         }
       }
@@ -35,8 +35,8 @@ pipeline {
           script{
             withCredentials([string(credentialsId: 'dockerPass', variable: 'dockerPassword')]) {
               sh "docker login -u comdevops -p ${dockerPassword}"
-              sh 'docker push comdevops/java:v2'
-              sh 'docker rmi comdevops/java:v2'
+              sh 'docker push comdevops/multi:v2'
+              sh 'docker rmi comdevops/multi:v2'
             }
           }
         }
