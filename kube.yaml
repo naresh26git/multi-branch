@@ -22,7 +22,7 @@ spec:
       imagePullPolicy: Always
       ports:
         - name: app-port
-          containerPort: 8080
+          containerPort: 8082
           
 ---
 apiVersion: v1
