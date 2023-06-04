@@ -1,11 +1,9 @@
 pipeline {
     agent any
+    tools {
+        maven 'maven3' 
+    }
     stages {
-      stage('SCM Checkout'){
-        steps{
-          git credentialsId: 'git', url: 'https://github.com/st-naresh/Java-pj.git'
-        }
-      }
       stage ('Build') {
         steps {
           script{
