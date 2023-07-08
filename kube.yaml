@@ -34,7 +34,7 @@ spec:
    spec: 
     containers: 
     - name: my-deployment-container 
-      image: comdevops/multi:v2
+      image: naresh2603/multi:v1
       imagePullPolicy: Always
       ports:
         - name: app-port
