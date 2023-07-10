@@ -8,7 +8,7 @@ pipeline {
         steps {
           script{
             def mvnHome = tool name: 'maven3', type: 'maven'
-            sh "mvn clean package"
+            sh "mvn clean install"
             //sh 'mv target/onlinebookstore*.war target/newbook.war'
           }
         }
@@ -26,7 +26,7 @@ pipeline {
       stage('Docker Build') {
         steps{
           script{
-            sh 'docker build -t naresh2603/multi:v1 .'
+            sh 'docker build -t naresh2603/multi:v10 .'
             //sh 'docker images'
           }
         }
@@ -36,8 +36,8 @@ pipeline {
           script{
             withCredentials([string(credentialsId: 'dockerPass', variable: 'dockerPassword')]) {
               sh "docker login -u naresh2603 -p ${dockerPassword}"
-              sh 'docker push naresh2603/multi:v1'
-              sh 'docker rmi naresh2603/multi:v1'
+              sh 'docker push naresh2603/multi:v10'
+              sh 'docker rmi naresh2603/multi:v10'
             }
           }
         }
