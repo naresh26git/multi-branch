@@ -36,8 +36,8 @@ pipeline {
           script{
             withCredentials([string(credentialsId: 'dockerPass', variable: 'dockerPassword')]) {
               sh "docker login -u naresh2603 -p ${dockerPassword}"
-              sh 'docker push naresh2603/multi:v10'
-              sh 'docker rmi naresh2603/multi:v10'
+              sh 'docker push naresh2603/multi:v1'
+              sh 'docker rmi naresh2603/multi:v1'
             }
           }
         }
