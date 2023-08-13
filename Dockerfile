@@ -4,7 +4,7 @@ FROM tomcat:8
 #RUN rm -rf /usr/local/tomcat/webapps/
 
 # Copy your Java WAR file to the container
-COPY target/mybook.war /usr/local/tomcat/webapps/
+COPY target/newbook.war /usr/local/tomcat/webapps/
 
 # Expose the default Tomcat port
 #EXPOSE 8080
