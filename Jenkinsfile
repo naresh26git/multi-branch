@@ -15,16 +15,16 @@ pipeline {
           }
         }
       }
-      stage ('SonarQube'){
-        steps{
-          script{
-            def mvnHome =  tool name: 'maven3', type: 'maven'
-            withSonarQubeEnv('sonar-pro') {
-              sh "${mvnHome}/bin/mvn sonar:sonar"
-            }
-          }
-        }
-      }
+      // stage ('SonarQube'){
+      //   steps{
+      //     script{
+      //       def mvnHome =  tool name: 'maven3', type: 'maven'
+      //       withSonarQubeEnv('sonar-pro') {
+      //         sh "${mvnHome}/bin/mvn sonar:sonar"
+      //       }
+      //     }
+      //   }
+      // }
       stage('Docker Build') {
         steps{
           script{
@@ -44,14 +44,17 @@ pipeline {
           }
         }
       }
-      stage('Deploy on k8s') {    
-        steps {
-          script{
-            withKubeCredentials(kubectlCredentials: [[ credentialsId: 'kubernetes', namespace: 'ms' ]]) {
-                sh 'kubectl apply -f kube.yaml'
-            }
-          }
-        }
-      }
     }
 }
+
+//       stage('Deploy on k8s') {    
+//         steps {
+//           script{
+//             withKubeCredentials(kubectlCredentials: [[ credentialsId: 'kubernetes', namespace: 'ms' ]]) {
+//                 sh 'kubectl apply -f kube.yaml'
+//             }
+//           }
+//         }
+//       }
+//     }
+// }
