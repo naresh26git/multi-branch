@@ -18,7 +18,7 @@ pipeline {
         //         }
         //     }
         // }
-        stage('Docker Build') {
+        stage('Docker Build Images') {
             steps {
                 script {
                     sh 'docker build -t naresh2603/multi:v2 .'
@@ -39,15 +39,15 @@ pipeline {
         }
     }
 }
-//         stage('Deploy on k8s') {
-//             steps {
-//                 script {
-//                     withKubeCredentials(kubectlCredentials: [[ credentialsId: 'kubernetes', namespace: 'ms' ]]) {
-//                         sh 'kubectl apply -f kube.yaml'
-//                         sh 'kubectl get pods -o wide'
-//                     }
-//                 }
-//             }
-//         }
-//     }
-// }
+        stage('Deploy on k8s') {
+            steps {
+                script {
+                    withKubeCredentials(kubectlCredentials: [[ credentialsId: 'kubernetes', namespace: 'ms' ]]) {
+                        sh 'kubectl apply -f kube.yaml'
+                        sh 'kubectl get pods -o wide'
+                    }
+                }
+            }
+        }
+    }
+}
