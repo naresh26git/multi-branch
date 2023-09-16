@@ -8,16 +8,16 @@ pipeline {
                 }
             }
         }
-        // stage ('SonarQube Analysis') {
-        //     steps {
-        //         script { 
-        //             def scannerHome = tool 'sonarscanner4'
-        //             withSonarQubeEnv('sonar-pro') {
-        //                 sh "${scannerHome}/bin/sonar-scanner -Dsonar.projectKey=node.js-app"
-        //             }
-        //         }
-        //     }
-        // }
+        stage ('SonarQube Analysis') {
+            steps {
+                script { 
+                    def scannerHome = tool 'sonarscanner4'
+                    withSonarQubeEnv('sonar-pro') {
+                        sh "${scannerHome}/bin/sonar-scanner -Dsonar.projectKey=node.js-app"
+                    }
+                }
+            }
+        }
         stage('Docker Build Images') {
             steps {
                 script {
