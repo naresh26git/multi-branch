@@ -36,7 +36,7 @@ metadata:
 spec:
   selector:
     app: "node-app"
-  type: LoadBalancer
+  type: NodePort
   ports:
   - name: "node-app"
     port: 3000
